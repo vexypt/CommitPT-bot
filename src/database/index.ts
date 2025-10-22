@@ -1,9 +1,10 @@
+import { env } from "#env";
+import chalk from "chalk";
 import mongoose, { InferSchemaType, model } from "mongoose";
 import { guildSchema } from "./schemas/guild.js";
 import { memberSchema } from "./schemas/member.js";
+import { panelSchema } from "./schemas/reactionRoles/panel.js";
 import { userSchema } from "./schemas/user.js";
-import { env } from "#env";
-import chalk from "chalk";
 
 try {
    console.log(chalk.blue("Connecting to MongoDB..."));
@@ -20,8 +21,10 @@ export const db = {
    guilds: model("guild", guildSchema, "guilds"),
    members: model("member", memberSchema, "members"),
    users: model("user", userSchema, "users"),
+   panels: model("panel", panelSchema, "panels"),
 };
 
 export type GuildSchema = InferSchemaType<typeof guildSchema>;
 export type MemberSchema = InferSchemaType<typeof memberSchema>;
 export type UserSchema = InferSchemaType<typeof userSchema>;
+export type PanelSchema = InferSchemaType<typeof panelSchema>;
