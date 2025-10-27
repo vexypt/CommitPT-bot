@@ -13,22 +13,22 @@
     "start:dev": "node --env-file .env.dev ."
   },
   "dependencies": {
-    "discord.js": "14.22.1",
+    "@fastify/cors": "10.0.1",
     "@magicyan/discord": "1.5.4",
-    "rou3": "0.7.3",
-    "zod": "4.1.11",
     "@reliverse/reglob": "1.0.0",
     "chalk": "5.6.2",
-    "mongoose": "8.3.1",
-    "http-status-codes": "2.3.0",
+    "discord.js": "^14.24.0",
     "fastify": "5.0.0",
-    "@fastify/cors": "10.0.1"
+    "http-status-codes": "2.3.0",
+    "mongoose": "8.3.1",
+    "rou3": "0.7.3",
+    "zod": "4.1.11"
   },
   "devDependencies": {
-    "typescript": "5.9.3",
     "@types/node": "22.16.4",
+    "tsup": "^8.3.5",
     "tsx": "4.19.3",
-    "tsup": "^8.3.5"
+    "typescript": "5.9.3"
   },
   "imports": {
     "#env": [
