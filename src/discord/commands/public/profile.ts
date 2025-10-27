@@ -45,6 +45,14 @@ createCommand({
                     });
                     return;
                 }
+                const isMember = guild.members.cache.has(user.id);
+                if(!isMember) {
+                    interaction.reply({
+                        content: "O membro tem de estar dentro do servidor!",
+                        flags: [MessageFlags.Ephemeral]
+                    });
+                    return;
+                }
 
                 await interaction.editReply(menus.profile.main(user, guild));
 
