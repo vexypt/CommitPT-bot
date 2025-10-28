@@ -1,6 +1,6 @@
 import { createCommand } from "#base";
 import { menus } from "#menus";
-import { ApplicationCommandOptionType, ApplicationCommandType, ApplicationIntegrationType, InteractionContextType, MessageFlags } from "discord.js";
+import { ApplicationCommandOptionType, ApplicationCommandType, ApplicationIntegrationType, InteractionContextType } from "discord.js";
 
 createCommand({
     name: "user",
@@ -36,20 +36,19 @@ createCommand({
                 await interaction.deferReply();
 
                 const user = options.getUser("user") || interaction.user;
+                
                 const guild = interaction.guild;
-
                 if(!guild) {
-                    interaction.reply({
-                        content: "Este comando só pode ser usado dentro de um servidor!",
-                        flags: [MessageFlags.Ephemeral]
+                    interaction.editReply({
+                        content: "❌ Este comando só pode ser usado dentro de um servidor."
                     });
                     return;
                 }
+
                 const isMember = guild.members.cache.has(user.id);
                 if(!isMember) {
-                    interaction.reply({
-                        content: "O membro tem de estar dentro do servidor!",
-                        flags: [MessageFlags.Ephemeral]
+                    interaction.editReply({
+                        content: "❌ Membro não encontrado no servidor."
                     });
                     return;
                 }
