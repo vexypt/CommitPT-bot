@@ -53,7 +53,7 @@ createCommand({
                     return;
                 }
 
-                await interaction.editReply(menus.profile.main(user, guild));
+                await interaction.editReply(await menus.profile.main(user, guild));
 
                 return;
             }
