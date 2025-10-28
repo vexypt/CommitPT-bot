@@ -1,4 +1,4 @@
-import { profileMainMenu } from "./profile/main.js";
+import { profileMainMenu } from './profile/main.js';
 
 export const menus = {
     profile: {

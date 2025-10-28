@@ -1,5 +1,5 @@
-import { Schema } from "mongoose";
-import { t } from "../utils.js";
+import { Schema } from 'mongoose';
+import { t } from '../utils.js';
 
 export const guildSchema = new Schema(
     {

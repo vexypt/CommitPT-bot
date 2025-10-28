@@ -1,4 +1,4 @@
-import { bootstrap } from "#base";
-import "#server";
+import { bootstrap } from '#base';
+import '#server';
 
 await bootstrap({ meta: import.meta });
