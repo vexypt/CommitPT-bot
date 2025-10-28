@@ -48,7 +48,6 @@ export async function profileMainMenu<R>(user: User, guild: Guild): Promise<R> {
             .addItems(
                 item => item.setURL(bannerURL).setDescription(`${member.user.username} banner`)
             );
-
             profileContainer.addMediaGalleryComponents(mediaGalleryContainer);
     }
 
