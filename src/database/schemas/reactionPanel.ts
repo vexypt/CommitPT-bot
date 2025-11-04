@@ -18,5 +18,12 @@ export const reactionRolePanelSchema = new Schema(
         mappings: { type: [mappingSchema], default: [] },
         createdBy: { type: String, required: true }
     },
-    { timestamps: true }
+    {
+        statics: {
+            async createPanel(guildId: string, title: string, createdBy: string) {
+                const query = { guildId, title, createdBy };
+                return await this.create(query);
+            }
+        },
+    },
 );
