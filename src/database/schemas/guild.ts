@@ -2,14 +2,14 @@ import { Schema } from 'mongoose';
 import { t } from '../utils.js';
 
 export const guildSchema = new Schema(
-    {
-        id: t.string,
+  {
+    id: t.string,
+  },
+  {
+    statics: {
+      async get(id: string) {
+        return (await this.findOne({ id })) ?? this.create({ id });
+      },
     },
-    {
-        statics: {
-            async get(id: string) {
-                return await this.findOne({ id }) ?? this.create({ id });
-            }
-        }
-    }
+  }
 );

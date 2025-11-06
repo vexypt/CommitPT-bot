@@ -2,97 +2,98 @@ import { createCommand } from '#base';
 import { db } from '#database';
 import { menus } from '#menus';
 import {
-    ApplicationCommandOptionType, ApplicationCommandType,
-    ApplicationIntegrationType,
-    InteractionContextType,
-    MessageFlags
+  ApplicationCommandOptionType,
+  ApplicationCommandType,
+  ApplicationIntegrationType,
+  InteractionContextType,
+  MessageFlags,
 } from 'discord.js';
 
 // autocomplete helper
 async function panelAutocomplete(interaction: any) {
-    const guildId = interaction.guild?.id;
-    if (!guildId) return [];
-    const q = await db.reactionRolePanel.find({ guildId }).limit(25).exec();
-    return q.map(p => ({ name: p.title ?? String(p._id), value: String(p._id) }));
+  const guildId = interaction.guild?.id;
+  if (!guildId) return [];
+  const q = await db.reactionRolePanel.find({ guildId }).limit(25).exec();
+  return q.map((p) => ({
+    name: p.title ?? String(p._id),
+    value: String(p._id),
+  }));
 }
 
 createCommand({
-    name: "rr",
-    description: "reactionRole module",
-    type: ApplicationCommandType.ChatInput,
-    contexts: [
-        InteractionContextType.Guild,
-    ],
-    integrationTypes: [
-        ApplicationIntegrationType.GuildInstall,
-    ],
-    global: false,
-    options: [
+  name: 'rr',
+  description: 'reactionRole module',
+  type: ApplicationCommandType.ChatInput,
+  contexts: [InteractionContextType.Guild],
+  integrationTypes: [ApplicationIntegrationType.GuildInstall],
+  global: false,
+  options: [
+    {
+      name: 'create',
+      description: 'Create a reaction role panel',
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
         {
-            name: "create",
-            description: "Create a reaction role panel",
-            type: ApplicationCommandOptionType.Subcommand,
-            options: [
-                {
-                    name: "name",
-                    description: "Name of the reaction role panel",
-                    type: ApplicationCommandOptionType.String,
-                    required: true,
-                }
-            ]
+          name: 'name',
+          description: 'Name of the reaction role panel',
+          type: ApplicationCommandOptionType.String,
+          required: true,
         },
+      ],
+    },
+    {
+      name: 'edit',
+      description: 'Edit an existing panel',
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
         {
-            name: "edit",
-            description: "Edit an existing panel",
-            type: ApplicationCommandOptionType.Subcommand,
-            options: [
-                {
-                    name: "panel",
-                    description: "Select panel to edit",
-                    type: ApplicationCommandOptionType.String,
-                    required: true,
-                    autocomplete: panelAutocomplete,
-                }
-            ]
+          name: 'panel',
+          description: 'Select panel to edit',
+          type: ApplicationCommandOptionType.String,
+          required: true,
+          autocomplete: panelAutocomplete,
         },
+      ],
+    },
+    {
+      name: 'send',
+      description: 'Send an existing panel to the current channel',
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
         {
-            name: "send",
-            description: "Send an existing panel to the current channel",
-            type: ApplicationCommandOptionType.Subcommand,
-            options: [
-                {
-                    name: "panel",
-                    description: "Select panel to send",
-                    type: ApplicationCommandOptionType.String,
-                    required: true,
-                    autocomplete: panelAutocomplete,
-                }
-            ]
-        }
-    ],
-    //defaultMemberPermissions: [PermissionFlagsBits.ManageRoles],
-    async run(interaction) {
-        
-        const { options, user, guild } = interaction;
+          name: 'panel',
+          description: 'Select panel to send',
+          type: ApplicationCommandOptionType.String,
+          required: true,
+          autocomplete: panelAutocomplete,
+        },
+      ],
+    },
+  ],
+  //defaultMemberPermissions: [PermissionFlagsBits.ManageRoles],
+  async run(interaction) {
+    const { options, user, guild } = interaction;
 
-        if(interaction.user.id !== "629734543867379732") return;
-        if(!guild) return;
+    if (interaction.user.id !== '629734543867379732') return;
+    if (!guild) return;
 
-        await interaction.deferReply({ flags: [MessageFlags.Ephemeral] });
+    await interaction.deferReply({ flags: [MessageFlags.Ephemeral] });
 
-        switch (options.getSubcommand()) {
+    switch (options.getSubcommand()) {
+      case 'create': {
+        await interaction
+          .editReply(
+            await menus.reactionPanel.config.create(user, guild, options.getString('name', true))
+          )
+          .catch((error) => {
+            interaction.editReply(`Erro ao criar painel de reação: ${error.message}`);
+          });
 
-            case "create": {
+        return;
+      }
+    }
 
-                await interaction.editReply(await menus.reactionPanel.config.create(user, guild, options.getString("name", true))).catch((error) => {
-                    interaction.editReply(`Erro ao criar painel de reação: ${error.message}`);
-                });
-
-                return;
-            }
-        }
-
-        /*if (sub === "create") {
+    /*if (sub === "create") {
             const channel = interaction.options.getChannel("channel", true);
             // send a small embed with buttons to open modal for configuration
             const configureBtn = new ButtonBuilder()
@@ -161,7 +162,7 @@ createCommand({
             await interaction.reply({ content: `Painel enviado em ${channel.toString()}`, ephemeral: true });
             return;
         }*/
-    }
+  },
 });
 /*
 // Responder: abre modal para criar painel
