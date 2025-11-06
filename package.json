@@ -5,8 +5,8 @@
   "scripts": {
     "test": "tsc --noEmit && echo ✔ Ok",
     "build": "tsup",
-    "canary": "tsx --env-file .env ./src/index.ts",
-    "dev:canary": "tsx --env-file .env.dev ./src/index.ts",
+    "dev": "tsx --env-file .env ./src/index.ts",
+    "canary": "tsx --env-file .env.dev ./src/index.ts",
     "watch": "tsx --watch --env-file .env ./src/index.ts",
     "watch:canary": "tsx --watch --env-file .env.dev ./src/index.ts",
     "start": "node --env-file .env .",
