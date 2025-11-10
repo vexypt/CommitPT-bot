@@ -81,13 +81,9 @@ createCommand({
 
     switch (options.getSubcommand()) {
       case 'create': {
-        await interaction
-          .editReply(
-            await menus.reactionPanel.config.create(user, guild, options.getString('name', true))
-          )
-          .catch((error) => {
-            interaction.editReply(`Erro ao criar painel de reação: ${error.message}`);
-          });
+        await interaction.editReply(
+          await menus.reactionPanel.config.create(user, guild, options.getString('name', true))
+        );
 
         return;
       }
