@@ -19,7 +19,7 @@ export async function reactionPanelConfig_CreateMenu<R>(
   guild: Guild,
   title: string
 ): Promise<R> {
-  let panel: Awaited<ReturnType<typeof db.reactionRolePanel.createPanel>>
+  let panel: Awaited<ReturnType<typeof db.reactionRolePanel.createPanel>>;
   try {
     panel = await db.reactionRolePanel.createPanel(guild.id, title, user.id);
   } catch (err: any) {
