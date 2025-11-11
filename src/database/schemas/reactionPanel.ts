@@ -29,7 +29,13 @@ export const reactionRolePanelSchema = new Schema(
           throw err;
         }
 
-        const query = { guildId, title, createdBy };
+        // Ensure new drafts have a unique placeholder messageId so they don't
+        // collide with an existing unique index that treats null/undefined as a value.
+        // This is a defensive fix for deployments where the DB index hasn't been
+        // converted to a partial index yet.
+        const draftMessageId = `draft:${Date.now()}:${Math.random().toString(36).slice(2)}`;
+
+        const query: any = { guildId, title, createdBy, messageId: draftMessageId };
         return await this.create(query);
       },
       async findByTitle(title: string) {
@@ -37,4 +43,15 @@ export const reactionRolePanelSchema = new Schema(
       },
     },
   }
+);
+
+// Ensure messageId is unique only when it exists and is not null.
+// This avoids duplicate-key errors when multiple draft documents don't have a messageId yet.
+// Note: If your database already has a unique index on messageId that allows nulls,
+// you'll need to drop it and recreate it as a partial index in MongoDB:
+// db.reactionRolePanels.dropIndex("messageId_1");
+// db.reactionRolePanels.createIndex({ messageId: 1 }, { unique: true, partialFilterExpression: { messageId: { $exists: true, $ne: null } } });
+reactionRolePanelSchema.index(
+  { messageId: 1 },
+  { unique: true, partialFilterExpression: { messageId: { $exists: true, $ne: null } } }
 );
