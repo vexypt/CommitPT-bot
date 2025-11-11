@@ -22,12 +22,14 @@ export async function reactionPanelConfig_CreateMenu<R>(
   let panel: Awaited<ReturnType<typeof db.reactionRolePanel.createPanel>>;
   try {
     panel = await db.reactionRolePanel.createPanel(guild.id, title, user.id);
-  } catch (err: any) {
+  } catch (err) {
     const errorContainer = new ContainerBuilder({
       accent_color: hexToRgb(constants.colors.danger),
     });
 
-    if (err?.code === 'PANEL_TITLE_EXISTS') {
+    const error = err as Error & { code?: string };
+
+    if (error?.code === 'PANEL_TITLE_EXISTS') {
       errorContainer.addTextDisplayComponents({
         type: ComponentType.TextDisplay,
         content: brBuilder(
@@ -47,13 +49,13 @@ export async function reactionPanelConfig_CreateMenu<R>(
         content: brBuilder(
           `# ⚠️ Erro inesperado ao criar painel de reação`,
           '',
-          `${codeBlock('ascii', err?.message || String(err))}`
+          `${codeBlock('ascii', error?.message || String(error))}`
         ),
       });
     }
 
     // Re-throw para que erros inesperados sejam tratados mais acima
-    throw err;
+    throw error;
   }
 
   const createMenuContainer = new ContainerBuilder({

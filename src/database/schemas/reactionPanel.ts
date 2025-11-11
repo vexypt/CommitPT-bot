@@ -24,7 +24,7 @@ export const reactionRolePanelSchema = new Schema(
         // Verifica se já existe um painel com o mesmo título no mesmo servidor
         const existing = await this.findOne({ guildId, title }).exec();
         if (existing) {
-          const err: any = new Error('PanelTitleExists');
+          const err = new Error('PanelTitleExists') as Error & { code: string };
           err.code = 'PANEL_TITLE_EXISTS';
           throw err;
         }
@@ -35,7 +35,7 @@ export const reactionRolePanelSchema = new Schema(
         // converted to a partial index yet.
         const draftMessageId = `draft:${Date.now()}:${Math.random().toString(36).slice(2)}`;
 
-        const query: any = { guildId, title, createdBy, messageId: draftMessageId };
+        const query = { guildId, title, createdBy, messageId: draftMessageId };
         return await this.create(query);
       },
       async findByTitle(title: string) {
