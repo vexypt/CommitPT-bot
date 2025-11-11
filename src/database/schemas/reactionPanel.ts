@@ -41,6 +41,9 @@ export const reactionRolePanelSchema = new Schema(
       async findByTitle(title: string) {
         return await this.findOne({ title }).exec();
       },
+      async findById(id: string) {
+        return await this.findOne({ _id: id }).exec();
+      }
     },
   }
 );
