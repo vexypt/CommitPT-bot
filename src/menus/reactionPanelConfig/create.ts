@@ -19,7 +19,7 @@ export async function reactionPanelConfig_CreateMenu<R>(
   guild: Guild,
   title: string
 ): Promise<R> {
-  let panel: any;
+  let panel: Awaited<ReturnType<typeof db.reactionRolePanel.createPanel>>
   try {
     panel = await db.reactionRolePanel.createPanel(guild.id, title, user.id);
   } catch (err: any) {
@@ -75,17 +75,17 @@ export async function reactionPanelConfig_CreateMenu<R>(
 
   const buttonsRow = createRow(
     new ButtonBuilder({
-      customId: 'rr/create/select_channel',
+      customId: `rr/create/select_channel/${title}`,
       label: 'Selecionar Canal',
       style: ButtonStyle.Primary,
     }),
     new ButtonBuilder({
-      customId: 'rr/create/open',
+      customId: `rr/create/open/${title}`,
       label: 'Configurar Painel',
       style: ButtonStyle.Secondary,
     }),
     new ButtonBuilder({
-      customId: 'rr/create/send',
+      customId: `rr/create/send/${title}`,
       label: 'Enviar',
       style: ButtonStyle.Success,
     })
@@ -94,7 +94,7 @@ export async function reactionPanelConfig_CreateMenu<R>(
   // Em um row separado apenas para para estética visual (ele fica na linha de baixo)
   const deleteRow = createRow(
     new ButtonBuilder({
-      customId: 'rr/create/delete',
+      customId: `rr/create/delete/${title}`,
       label: 'Apagar Painel',
       style: ButtonStyle.Danger,
     })

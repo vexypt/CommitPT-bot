@@ -11,7 +11,7 @@ export const reactionRolePanelSchema = new Schema(
   {
     guildId: { type: String, index: true, required: true },
     channelId: { type: String },
-    messageId: { type: String, unique: true },
+    messageId: { type: String },
     title: { type: String, required: true, unique: true },
     content: { type: String, default: '' },
     mutuallyExclusive: { type: Boolean, default: false },
@@ -31,6 +31,9 @@ export const reactionRolePanelSchema = new Schema(
 
         const query = { guildId, title, createdBy };
         return await this.create(query);
+      },
+      async findByTitle(title: string) {
+        return await this.findOne({ title }).exec();
       },
     },
   }
