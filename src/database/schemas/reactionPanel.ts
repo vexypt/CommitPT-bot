@@ -43,7 +43,7 @@ export const reactionRolePanelSchema = new Schema(
       },
       async findById(id: string) {
         return await this.findOne({ _id: id }).exec();
-      }
+      },
     },
   }
 );

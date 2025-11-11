@@ -74,6 +74,11 @@ createResponder({
             return;
           }
 
+          case 'config': {
+            interaction.update(await menus.reactionPanel.config.config(interaction.guild!, title));
+            return;
+          }
+
           case 'delete': {
             const reactionPanel = await db.reactionRolePanel.findByTitle(title);
             if (!reactionPanel) {

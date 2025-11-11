@@ -20,7 +20,7 @@ export async function reactionPanelConfig_CreateMenu<R>(
   title: string
 ): Promise<R> {
   let panel = await db.reactionRolePanel.findByTitle(title);
-  
+
   if (!panel) {
     try {
       panel = await db.reactionRolePanel.createPanel(guild.id, title, user.id);
@@ -86,7 +86,7 @@ export async function reactionPanelConfig_CreateMenu<R>(
       style: ButtonStyle.Primary,
     }),
     new ButtonBuilder({
-      customId: `rr/create/open/${title}`,
+      customId: `rr/create/config/${title}`,
       label: 'Configurar Painel',
       style: ButtonStyle.Secondary,
     }),

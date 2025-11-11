@@ -95,7 +95,7 @@ createCommand({
 
         if (!panel) {
           await interaction.editReply({
-            content: `Painel com o ID ${inlineCode(panelId)} não encontrado.`
+            content: `Painel com o ID ${inlineCode(panelId)} não encontrado.`,
           });
           return;
         }
