@@ -1,10 +1,10 @@
-import { type CommandInteraction } from 'discord.js';
 import { brBuilder } from '@magicyan/discord';
+import { type CommandInteraction } from 'discord.js';
 import { CommandManager } from './commands/manager.js';
-import { ResponderManager } from './responders/manager.js';
-import { GenericResponderInteraction } from './responders/types.js';
 import { EventManager } from './events/manager.js';
 import { EventPropData } from './events/types.js';
+import { ResponderManager } from './responders/manager.js';
+import { GenericResponderInteraction } from './responders/types.js';
 
 export interface BaseCommandsConfig {
   guilds?: string[];
@@ -35,8 +35,8 @@ interface BaseConfig {
   responders: BaseRespondersConfig;
 }
 
-export class Constatic {
-  private static instance: Constatic | null = null;
+export class Bot {
+  private static instance: Bot | null = null;
 
   public readonly commands: CommandManager;
   public readonly events: EventManager;
@@ -55,10 +55,10 @@ export class Constatic {
     };
   }
   public static getInstance() {
-    if (!Constatic.instance) {
-      Constatic.instance = new Constatic();
+    if (!Bot.instance) {
+      Bot.instance = new Bot();
     }
-    return Constatic.instance;
+    return Bot.instance;
   }
   public printLoadLogs() {
     console.log(brBuilder(...this.commands.logs, ...this.responders.logs, ...this.events.logs));

@@ -7,12 +7,12 @@ import {
   Collection,
   CommandInteraction,
 } from 'discord.js';
-import { Constatic } from '../app.js';
+import { Bot } from '../app.js';
 import { CommandType, RunBlockError } from './types.js';
 
 export abstract class BaseCommandHandlers {
   public static async autocomplete(interaction: AutocompleteInteraction) {
-    const app = Constatic.getInstance();
+    const app = Bot.getInstance();
     const options = interaction.options;
 
     const handler = app.commands.getAutocompleteHandler(
@@ -31,7 +31,7 @@ export abstract class BaseCommandHandlers {
   public static async command(interaction: CommandInteraction) {
     if (interaction.isPrimaryEntryPointCommand()) return;
 
-    const app = Constatic.getInstance();
+    const app = Bot.getInstance();
     const { onNotFound, middleware, onError } = app.config.commands;
 
     let isBlock = false;
@@ -76,7 +76,7 @@ export abstract class BaseCommandHandlers {
     }
   }
   public static async register(client: Client<true>) {
-    const app = Constatic.getInstance();
+    const app = Bot.getInstance();
     const messages: string[] = [];
 
     const pluralize = (value: number) => (value > 1 ? 's' : '');

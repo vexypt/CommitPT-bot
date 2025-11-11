@@ -3,7 +3,7 @@ import { CustomItents, CustomPartials } from '@magicyan/discord';
 import { glob } from '@reliverse/reglob';
 import ck from 'chalk';
 import { Client, ClientOptions, version as djsVersion } from 'discord.js';
-import { Constatic } from './app.js';
+import { Bot } from './app.js';
 import { baseErrorHandler } from './base.error.js';
 import { runtimeDisplay } from './base.version.js';
 import { BaseCommandHandlers } from './commands/handlers.js';
@@ -27,7 +27,7 @@ export async function bootstrap(options: BootstrapOptions) {
     failIfNotExists: options.failIfNotExists ?? false,
   });
 
-  const app = Constatic.getInstance();
+  const app = Bot.getInstance();
 
   client.once('clientReady', async (client) => {
     registerErrorHandlers(client);

@@ -1,7 +1,6 @@
-import ck from 'chalk';
-import { z, ZodObject, ZodRawShape } from 'zod';
 import { brBuilder } from '@magicyan/discord';
-import chalk from 'chalk';
+import { default as chalk, default as ck } from 'chalk';
+import { z, ZodObject, ZodRawShape } from 'zod';
 
 const x = chalk.red('✖︎');
 const w = chalk.yellow('▲');
@@ -29,7 +28,7 @@ export function validateEnv<T extends ZodRawShape>(schema: ZodObject<T>) {
         `- Inject the ${u('variables')} into the environment manually or through a tool`,
         '',
         chalk.blue(
-          `↗ ${chalk.underline('https://constatic-docs.vercel.app/docs/discord/conventions/env')}`
+          `↗ ${chalk.underline('https://Bot-docs.vercel.app/docs/discord/conventions/env')}`
         ),
         ''
       )

@@ -1,3 +1,4 @@
+import { env } from '#env';
 import {
   ApplicationCommandOptionType,
   ApplicationCommandType,
@@ -9,7 +10,7 @@ import {
   type BaseCommandsConfig,
   type BaseEventsConfig,
   type BaseRespondersConfig,
-  Constatic,
+  Bot,
 } from './app.js';
 import {
   AppCommandData,
@@ -18,9 +19,8 @@ import {
   SubCommandGroupModuleData,
   SubCommandModuleData,
 } from './commands/types.js';
-import { ResponderData, ResponderType } from './responders/types.js';
 import { EventData } from './events/types.js';
-import { env } from '#env';
+import { ResponderData, ResponderType } from './responders/types.js';
 
 interface SetupCreatorsOptions {
   commands?: Partial<BaseCommandsConfig> & {
@@ -30,7 +30,7 @@ interface SetupCreatorsOptions {
   events?: Partial<BaseEventsConfig>;
 }
 export function setupCreators(options: SetupCreatorsOptions = {}) {
-  const app = Constatic.getInstance();
+  const app = Bot.getInstance();
 
   app.config.commands = { ...options.commands };
 

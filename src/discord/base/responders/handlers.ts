@@ -1,4 +1,4 @@
-import { Constatic } from '../app.js';
+import { Bot } from '../app.js';
 import { GenericResponderInteraction, ResponderType } from './types.js';
 
 export abstract class BaseResponderHandlers {
@@ -22,7 +22,7 @@ export abstract class BaseResponderHandlers {
                     : undefined;
   }
   public static async handler(interaction: GenericResponderInteraction) {
-    const app = Constatic.getInstance();
+    const app = Bot.getInstance();
 
     const { middleware, onError, onNotFound } = app.config.responders;
 

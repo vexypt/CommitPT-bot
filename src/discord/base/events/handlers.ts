@@ -1,10 +1,10 @@
 import type { Client } from 'discord.js';
-import { Constatic } from '../app.js';
+import { Bot } from '../app.js';
 import type { EventPropData, GenericEventArgs, GenericEventData } from './types.js';
 
 export abstract class BaseEventHandlers {
   public static async handler(data: GenericEventData, args: GenericEventArgs) {
-    const app = Constatic.getInstance();
+    const app = Bot.getInstance();
 
     const { middleware, onError } = app.config.events;
 
@@ -36,7 +36,7 @@ export abstract class BaseEventHandlers {
     }
   }
   public static register(client: Client) {
-    const app = Constatic.getInstance();
+    const app = Bot.getInstance();
     const collection = app.events.collection.filter((_, key) => key !== 'clientReady');
 
     for (const [key, events] of collection.entries()) {

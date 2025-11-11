@@ -22,7 +22,7 @@ async function panelAutocomplete(interaction: any) {
 }
 
 createCommand({
-  name: 'rr',
+  name: 'reaction-role',
   description: 'reactionRole module',
   type: ApplicationCommandType.ChatInput,
   contexts: [InteractionContextType.Guild],
