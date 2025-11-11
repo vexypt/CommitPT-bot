@@ -3,7 +3,7 @@
   "type": "module",
   "main": "build/index.js",
   "scripts": {
-    "test": "tsc --noEmit && echo ✔ Ok",
+    "check": "tsc --noEmit && echo ✔ Ok",
     "build": "tsup",
     "dev": "tsx --env-file .env ./src/index.ts",
     "canary": "tsx --env-file .env.dev ./src/index.ts",
