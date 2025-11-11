@@ -33,7 +33,7 @@ export async function profileMainMenu<R>(user: User, guild: Guild): Promise<R> {
             content: brBuilder(
               `# Perfil de ${member} (@${member.user.username})`,
               `**ID:** ${inlineCode(member!.id)}`,
-              `**Entrou no servidor em:** ${time(member.joinedTimestamp!, 'R')}`,
+              `**Entrou no servidor em:** ${time(Math.floor(member.joinedTimestamp! / 1000), 'R')}`,
               '**Cargos:**',
               `${rolesList || '-# *Nenhum*'}`
             ),

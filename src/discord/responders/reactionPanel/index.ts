@@ -73,6 +73,51 @@ createResponder({
             );
             return;
           }
+
+          case 'delete': {
+            const reactionPanel = await db.reactionRolePanel.findByTitle(title);
+            if (!reactionPanel) {
+              const errorContainer = new ContainerBuilder({
+                accent_color: hexToRgb(constants.colors.danger),
+                components: [
+                  {
+                    type: ComponentType.TextDisplay,
+                    content: brBuilder(
+                      `# Erro ao apagar painel de reação`,
+                      '',
+                      '',
+                      `Painel de reação com o título ${inlineCode(title)} não encontrado.`
+                    ),
+                  },
+                ],
+              });
+              await interaction.update({
+                components: [errorContainer],
+              });
+              return;
+            }
+
+            await reactionPanel.deleteOne();
+
+            const confirmContainer = new ContainerBuilder({
+              accent_color: hexToRgb(constants.colors.success),
+              components: [
+                {
+                  type: ComponentType.TextDisplay,
+                  content: brBuilder(
+                    `# Painel de reação apagado com sucesso`,
+                    '',
+                    `O painel de reação com o título ${inlineCode(title)} foi apagado.`
+                  ),
+                },
+              ],
+            });
+
+            await interaction.update({
+              components: [confirmContainer],
+            });
+            return;
+          }
         }
 
         return;
